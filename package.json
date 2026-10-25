@@ -1,0 +1,17 @@
+{
+  "name": "stremio-legendas-ia",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "engines": {
+    "node": ">=20.6"
+  },
+  "scripts": {
+    "start": "node --env-file=.env index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "stremio-addon-sdk": "^1.6.10"
+  }
+}

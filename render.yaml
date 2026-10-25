@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: stremio-legendas-ia
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: node index.js
+    healthCheckPath: /health
+    envVars:
+      - key: ADDON_SECRET
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OS_API_KEY
+        sync: false
+      - key: OS_USERNAME
+        sync: false
+      - key: OS_PASSWORD
+        sync: false
