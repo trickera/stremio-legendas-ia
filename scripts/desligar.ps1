@@ -6,9 +6,13 @@ if (Test-Path $pidFile) {
   Remove-Item $pidFile
 }
 
-# Tira o PC da internet. O Tailscale continua instalado, so sem nada exposto.
+# Tira o PC da internet, desconecta e fecha o app do Tailscale
 $ts = (Get-Command tailscale -ErrorAction SilentlyContinue).Source
 if (-not $ts -and (Test-Path 'C:\Program Files\Tailscale\tailscale.exe')) { $ts = 'C:\Program Files\Tailscale\tailscale.exe' }
-if ($ts) { & $ts funnel reset }
+if ($ts) {
+  & $ts funnel reset
+  & $ts down
+}
+Get-Process tailscale-ipn -ErrorAction SilentlyContinue | Stop-Process -Force
 
 Write-Host 'Legendas IA desligado.'

@@ -36,9 +36,14 @@ if (-not (Test-Path (Join-Path $root 'node_modules'))) { npm install --no-fund -
 
 # Tailscale: URL https fixa apontando pro PC
 $ts = Get-Tailscale
+$gui = Join-Path (Split-Path $ts) 'tailscale-ipn.exe'
+if ((Test-Path $gui) -and -not (Get-Process tailscale-ipn -ErrorAction SilentlyContinue)) {
+  Start-Process $gui
+  Start-Sleep 2
+}
 $status = & $ts status --json | ConvertFrom-Json
 if ($status.BackendState -ne 'Running') {
-  Write-Host 'Tailscale precisa de login, vai abrir o navegador...'
+  Write-Host 'Conectando o Tailscale (se pedir login, abre o navegador)...'
   & $ts up
   $status = & $ts status --json | ConvertFrom-Json
 }
